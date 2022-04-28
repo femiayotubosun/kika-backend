@@ -1,14 +1,21 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
+import { UserRepository } from './user.respository';
 
 describe('AuthService', () => {
   let service: AuthService;
+  const mockUserRepository = {
+    createUser: jest.fn((dto) => 2),
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthService],
-      providers: [],
-    }).compile();
+      providers: [UserRepository],
+    })
+      .overrideProvider(UserRepository)
+      .useValue(mockUserRepository)
+      .compile();
 
     service = module.get(AuthService);
   });
@@ -18,14 +25,17 @@ describe('AuthService', () => {
   });
 
   describe('signUp', () => {
-    it('should return data passed in', () => {
+    it('should return nothing', () => {
       const dto = {
         first_name: 'Test',
         last_name: 'Name',
         email: 'testuser@kika.com',
         password: 'testpassword',
       };
-      expect(service.signUp(dto)).toEqual(dto);
+
+      service.signUp(dto);
+
+      expect(mockUserRepository.createUser).toHaveBeenCalledWith(dto);
     });
   });
 

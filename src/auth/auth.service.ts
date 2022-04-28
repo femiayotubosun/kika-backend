@@ -1,13 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { AuthDetailsDto } from './dtos/auth-details.dto';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { ForgotPasswordDto } from './dtos/forgot-password.dto';
+import { UserRepository } from './user.respository';
 
 @Injectable()
 export class AuthService {
-  //   FIXME
-  signUp(createUserDto: CreateUserDto) {
-    return createUserDto;
+  constructor(
+    @InjectRepository(UserRepository)
+    private userRepository: UserRepository,
+  ) {}
+
+  async signUp(createUserDto: CreateUserDto) {
+    await this.userRepository.createUser(createUserDto);
   }
 
   logIn(authDetailsDto: AuthDetailsDto) {

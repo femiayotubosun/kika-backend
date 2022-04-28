@@ -6,7 +6,7 @@ import {
   IsString,
 } from 'class-validator';
 import { string } from 'joi';
-import { TimeStampped } from 'src/entities/timestampped.entity';
+import { TimeStampped } from './../../entities/timestampped.entity';
 import { AfterUpdate, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRoles } from './user-roles.enum';
 
@@ -22,7 +22,7 @@ export class User extends TimeStampped {
   @Column()
   last_name: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
