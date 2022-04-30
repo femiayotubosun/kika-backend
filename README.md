@@ -1,5 +1,5 @@
 # KIKA
-An elearning web api
+An e-learning web api
 
 ## Installation
 
