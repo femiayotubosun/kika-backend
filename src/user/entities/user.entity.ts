@@ -2,7 +2,6 @@ import { TimeStampped } from '../../shared/entities/timestampped.entity';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRoles } from './user-roles.enum';
 
-// NOTE Should extend TimeStamp
 @Entity()
 export class User extends TimeStampped {
   @PrimaryGeneratedColumn('uuid')
