@@ -1,32 +1,26 @@
 import { Body, Controller, Post, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthDetailsDto } from './dtos/auth-details.dto';
-import { CreateUserDto } from './dtos/create-user.dto';
-import { ForgotPasswordDto } from './dtos/forgot-password.dto';
+import { LoginDto } from '../user/dtos/login.dto';
+import { CreateUserDto } from '../user/dtos/create-user.dto';
+import { UserRoles } from 'src/user/entities/user-roles.enum';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('signup')
-  signUp(@Body() createUserDto: CreateUserDto) {
-    return this.authService.signUp(createUserDto);
+  @Post('signup/student')
+  signUp(@Body() dto: CreateUserDto) {
+    return this.authService.signUp(dto, UserRoles.STUDENT);
+  }
+
+  @Post('signup/instructor')
+  signUpInstructor(@Body() dto: CreateUserDto) {
+    return this.authService.signUp(dto, UserRoles.INSTRUCTOR);
   }
 
   @Post('login')
-  logIn(@Body() authDetailsDto: AuthDetailsDto) {
-    return this.authService.logIn(authDetailsDto);
-  }
-
-  @Get('logout')
-  logOut() {
-    return this.authService.logOut();
-  }
-  //   forgot password
-
-  @Post('forgotPassword')
-  forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
-    return this.authService.forgotPassword(forgotPasswordDto);
+  logIn(@Body() dto: LoginDto) {
+    return this.authService.logIn(dto);
   }
 
   //   social-login

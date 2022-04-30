@@ -13,7 +13,7 @@ export class LoggingInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler<any>,
   ): Observable<any> | Promise<Observable<any>> {
-    console.log('Before...');
+    console.log(`Before...${context.getType()}`);
     const now = Date.now();
 
     return next.handle().pipe(

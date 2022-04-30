@@ -73,16 +73,6 @@ describe('AuthController', () => {
     expect(mockAuthService.logIn).toHaveBeenCalledWith(dto);
   });
 
-  it('forgot password should return the email', () => {
-    expect(
-      controller.forgotPassword({
-        email: 'test-email@email.com',
-      }),
-    ).toEqual({
-      email: 'test-email@email.com',
-    });
-  });
-
   it('google-login should return the email', () => {
     expect(
       controller.googleLogIn({
@@ -91,9 +81,5 @@ describe('AuthController', () => {
     ).toEqual({
       email: 'testemail@email.com',
     });
-  });
-
-  it('logout should return void', () => {
-    expect(controller.logOut()).toEqual(null);
   });
 });

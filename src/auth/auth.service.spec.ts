@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { UserRoles } from 'src/user/entities/user-roles.enum';
+import { UsersRepository } from 'src/user/users.respository';
 import { AuthService } from './auth.service';
-import { UserRepository } from './user.respository';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -11,9 +12,9 @@ describe('AuthService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthService],
-      providers: [UserRepository],
+      providers: [UsersRepository],
     })
-      .overrideProvider(UserRepository)
+      .overrideProvider(UsersRepository)
       .useValue(mockUserRepository)
       .compile();
 
@@ -33,7 +34,7 @@ describe('AuthService', () => {
         password: 'testpassword',
       };
 
-      service.signUp(dto);
+      service.signUp(dto, UserRoles.STUDENT);
 
       expect(mockUserRepository.createUser).toHaveBeenCalledWith(dto);
     });
@@ -52,24 +53,9 @@ describe('AuthService', () => {
     });
   });
 
-  describe('forgotPassword', () => {
-    const dto = {
-      email: 'test@email.co',
-    };
-    it('should return forgotPasswordDto', () => {
-      expect(service.forgotPassword(dto)).toEqual(dto);
-    });
-  });
-
   describe('googleLogin', () => {
     it('should return whatever was passed in', () => {
       expect(service.googleLogin('email')).toEqual('email');
-    });
-  });
-
-  describe('logOut', () => {
-    it('should', () => {
-      expect(service.logOut()).toEqual(null);
     });
   });
 });

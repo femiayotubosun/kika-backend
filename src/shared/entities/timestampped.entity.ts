@@ -9,6 +9,7 @@ export abstract class TimeStampped {
 
   @AfterUpdate()
   updateTime(): void {
+    // TODO Change to date time
     this.updated_at = Date.now().toString();
   }
 }

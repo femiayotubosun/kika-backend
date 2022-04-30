@@ -1,22 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserRepository } from './user.respository';
-
-
+import { UserRepository } from './users.respository';
 
 describe('UserRepository', () => {
   let service: UserRepository;
-  
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UserRepository],
-      providers: [
-        
-      ],
+      providers: [],
     }).compile();
 
     service = module.get(UserRepository);
-    
   });
 
   it('should be defined', () => {
@@ -24,14 +18,10 @@ describe('UserRepository', () => {
   });
 
   describe('createStudentUser', () => {
-    it('should', () => {
-
-    });
+    it('should', () => {});
   });
 
   describe('_hashpassword', () => {
-    it('should', () => {
-
-    });
+    it('should', () => {});
   });
 });

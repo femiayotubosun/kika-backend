@@ -9,11 +9,8 @@ import {
 import { UserRoles } from './entities/user-roles.enum';
 
 @EntityRepository(User)
-export class UserRepository extends Repository<User> {
-  async createUser(
-    dto: CreateUserDto,
-    role: UserRoles = UserRoles.STUDENT,
-  ): Promise<void> {
+export class UsersRepository extends Repository<User> {
+  async createUser(dto: CreateUserDto): Promise<User> {
     const { first_name, last_name, email, password } = dto;
 
     let found = await this.find({
@@ -31,11 +28,10 @@ export class UserRepository extends Repository<User> {
       first_name,
       last_name,
       password: hashedPass,
-      role,
     });
 
     try {
-      await this.save(user);
+      return await this.save(user);
     } catch (error) {
       throw new InternalServerErrorException('Something went wrong');
     }
